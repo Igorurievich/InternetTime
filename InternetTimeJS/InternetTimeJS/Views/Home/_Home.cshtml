@@ -1,0 +1,68 @@
+﻿<html>
+<head>
+    <script type="text/javascript">
+function Calculate(){
+              var time = new Date();              
+              document.getElementById("InternetTimeTextBox").value = getInternetTime(time);
+}
+function getInternetTime(dt) {
+    return (((dt.getUTCHours() + 1) % 24) + dt.getUTCMinutes() / 60 + dt.getUTCSeconds() / 3600) * 1000 / 24;
+}
+function testPerfomance() {
+    var start = new Date().getTime();
+    for (i = 0; i < 1000; i++)
+    {
+        var time = new Date();
+        document.getElementById("InternetTimeTextBox").value = getInternetTime(time);
+    }
+    var end = new Date().getTime();
+    var executionTime = end - start;
+    document.getElementById("test_seconds").value = executionTime + " ms";
+
+}
+function setTimeToTextBox() {
+    document.getElementById("NormalTimeTextBox").value = executionTime + " ms";
+}
+function updateClock() {
+    var now = new Date();
+    time = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+    document.getElementById('NormalTimeTextBox').value = time;
+
+    if (document.getElementById('realtimeUpdatingCheckBox').checked == true) {
+        document.getElementById("InternetTimeTextBox").value = getInternetTime(new Date());
+    }
+    setTimeout(updateClock, 1000);
+}
+</script>
+</head>
+
+<body onload="updateClock(); setInterval('updateClock()', 1000 )">
+    <div class="container">
+        <div class="row" style="margin-top: 25px;">
+            <div class="col-xs-6">
+                <p style="margin: 20px 0 0 0;">Normal time:</p>
+                <input id="NormalTimeTextBox" type="datetime" name="normal_time" value="" disabled/>
+                <p style="margin: 20px 0 0 0;">Internet time:</p>
+                <input id="InternetTimeTextBox" type="text" name="internet_time" value="" disabled/>
+                <br>
+                <input  id="realtimeUpdatingCheckBox" type="checkbox" name="checkbox" value=""  style="margin: 20px 0 0 0; float: left;"/><p style="margin: 16px 0 0 25px;">Realtime updating</p>
+            </div>
+
+            <div class="col-xs-6">
+                <p style="margin: 20px 0 0 0;">Test ended in:</p>
+                <input id="test_seconds" type="text" name="name" value="" disabled/>
+                <br>
+            </div>
+        </div>
+            <div class="row" style="margin-top: 250px;">
+                <div class="col-xs-6">
+                    <button id="change_button" class="btn btn-default" style="margin: 0 auto;" onclick="Calculate();">Change</button>
+                </div>
+
+                    <div class="col-xs-6">
+                        <button  id="test_perfomance_button" class="btn btn-default" style="margin: 0 auto;" onclick="testPerfomance();">Test perfomance</button>
+                    </div>
+            </div>
+        </div>
+</body>
+</html>
